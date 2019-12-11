@@ -55,10 +55,12 @@ target_include_directories(bulkmt_lib
 
 target_link_libraries(bulkmt_lib PRIVATE 
     ${Boost_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT} 
 )
 
 target_link_libraries(bulkmt PRIVATE
     ${Boost_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT} 
     bulkmt_lib 
 )
 
