@@ -20,6 +20,7 @@ if (WIN32)
 endif()
 
 find_package(Boost COMPONENTS system filesystem REQUIRED)
+find_package(Threads)
 
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
