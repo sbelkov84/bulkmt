@@ -5,6 +5,7 @@
 #include <string>
 #include <thread>
 #include <list>
+#include <fstream>
 //------------------------------------------------------------------------
 std::mutex Mtx;
 std::condition_variable CondVar;
@@ -48,6 +49,8 @@ void PrintInConsole(std::list<TElem>& List, TSimpleCounter& Counter)
   Lk.unlock();
   //---
   std::cout << Output << std::endl;
+  ++Counter.BulkQty;
+  //++Counter.
 }
 //------------------------------------------------------------------------
 
@@ -77,6 +80,7 @@ void PrintInFile(std::list<TElem>& List, TSimpleCounter& Counter)
   std::ofstream OutFile(FileName, std::ios::binary);
   OutFile << Output;  
   OutFile.close();
+  ++Counter.BulkQty;
 }
 //------------------------------------------------------------------------
 

@@ -2,7 +2,6 @@
 #include "single_bulk.h"
 //------------------------------------------------------------------------
 #include <iostream>
-#include <fstream>
 //------------------------------------------------------------------------
 
 TSingleBulk::TSingleBulk(TBulkManager* Manager, EBulkType Type, std::list<TElem>* BulkList, std::mutex* Mtx, std::condition_variable* CondVar, std::size_t N)
