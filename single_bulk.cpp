@@ -39,7 +39,7 @@ std::string TSingleBulk::CmdsToStr()
     Res += *It;
     Res += " ";
   }
-  ClearCmds();
+  //ClearCmds();
   //---
   return Res;
 }
@@ -52,7 +52,7 @@ void TSingleBulk::ReleaseBulk(bool NeedToPrint)
     Mtx->lock();
     std::string Out = std::move(CmdsToStr());
     std::string Time = std::move(std::to_string(FirstCmdTime));
-    BulkList->emplace_back(TElem(Out, Time));
+    BulkList->emplace_back(TElem(Out, Time, Commands.size()));
     Mtx->unlock();
     CondVar->notify_all();
   }

@@ -32,6 +32,7 @@ TSimpleCounter File2Counter;
 void PrintInConsole(std::list<TElem>& List, TSimpleCounter& Counter)
 {
   std::string Output;
+  std::size_t CmdsQty;
   std::unique_lock<std::mutex> Lk(Mtx);
   CondVar.wait(Lk, [&List](){return !List.empty();});
   auto Elem = List.begin();
@@ -42,6 +43,7 @@ void PrintInConsole(std::list<TElem>& List, TSimpleCounter& Counter)
   if (Elem != List.end())
   {
     Output = (*Elem).Output;
+    CmdsQty = (*Elem).CmdsQty;
     (*Elem).WasConsoled = true;
     if ((*Elem).WasFiled)
       List.erase(Elem);
@@ -50,13 +52,14 @@ void PrintInConsole(std::list<TElem>& List, TSimpleCounter& Counter)
   //---
   std::cout << Output << std::endl;
   ++Counter.BulkQty;
-  //++Counter.
+  Counter.CmdQty += CmdsQty;
 }
 //------------------------------------------------------------------------
 
 void PrintInFile(std::list<TElem>& List, TSimpleCounter& Counter)
 {
   std::string Output, Time;
+  std::size_t CmdsQty;
   std::unique_lock<std::mutex> Lk(Mtx);
   CondVar.wait(Lk, [&List](){return !List.empty();});
   auto Elem = List.begin();
@@ -68,6 +71,7 @@ void PrintInFile(std::list<TElem>& List, TSimpleCounter& Counter)
   {
     Output = (*Elem).Output;
     Time = (*Elem).Time;
+    CmdsQty = (*Elem).CmdsQty;
     (*Elem).WasFiled = true;
     if ((*Elem).WasConsoled)
       List.erase(Elem);
@@ -81,6 +85,7 @@ void PrintInFile(std::list<TElem>& List, TSimpleCounter& Counter)
   OutFile << Output;  
   OutFile.close();
   ++Counter.BulkQty;
+  Counter.CmdQty += CmdsQty;
 }
 //------------------------------------------------------------------------
 
@@ -121,12 +126,21 @@ int main(int argc, char** argv)
   std::string Cmd;
   while (std::getline(std::cin, Cmd))
   {
+    ++MainCounter.LineQty;
+    if (Cmd != "{" && Cmd != "}" && !Cmd.empty())
+      ++MainCounter.CmdQty;
+
     BulkManager.ExecCmd(Cmd);
   }
 
   Log.join();
   File1.join();
   File2.join();
+
+  std::cout << "Main:  Lines = " << MainCounter.LineQty << " Cmds = " << MainCounter.CmdQty << " Bulks = " << LogCounter.BulkQty << std::endl;
+  std::cout << "Log:   Bulks = " << LogCounter.BulkQty << " Cmds = " << LogCounter.CmdQty << std::endl;
+  std::cout << "File1: Bulks = " << File1Counter.BulkQty << " Cmds = " << File1Counter.CmdQty << std::endl;
+  std::cout << "File2: Bulks = " << File2Counter.BulkQty << " Cmds = " << File2Counter.CmdQty << std::endl;
 
   return 0;
 }

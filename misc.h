@@ -5,9 +5,9 @@
 struct TSimpleCounter 
 {
   
-  unsigned int BulkQty;
+  std::size_t BulkQty;
 
-  unsigned int CmdQty; 
+  std::size_t CmdQty; 
 
   TSimpleCounter() : BulkQty(0), CmdQty(0) {}
 };
@@ -16,7 +16,7 @@ struct TSimpleCounter
 struct TMainCounter : TSimpleCounter
 {
   
-  unsigned int LineQty;
+  std::size_t LineQty;
 
   TMainCounter() : LineQty(0) {}
 };
@@ -32,12 +32,15 @@ struct TElem
 
   std::string Time;
 
-  TElem(std::string& Output, std::string& Time)
+  std::size_t CmdsQty;
+
+  TElem(std::string& Output, std::string& Time, std::size_t CmdsQty)
   {
     WasConsoled = false;
     WasFiled = false;
     this->Output = Output;
     this->Time = Time;
+    this->CmdsQty = CmdsQty;
   }
 };
 //------------------------------------------------------------------------
