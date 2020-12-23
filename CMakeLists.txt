@@ -46,6 +46,7 @@ set_target_properties(bulkmt bulkmt_lib #test_bulkmt
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     LINKER_LANGUAGE CXX
+    CMAKE_CXX_FLAGS "-lstdc++fs"
 )
 
 #set_target_properties(bulkmt_lib PROPERTIES
