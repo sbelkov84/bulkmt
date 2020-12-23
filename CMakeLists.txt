@@ -45,6 +45,7 @@ set_target_properties(bulkmt bulkmt_lib #test_bulkmt
     PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
+    LINKER_LANGUAGE CXX
 )
 
 #set_target_properties(bulkmt_lib PROPERTIES
