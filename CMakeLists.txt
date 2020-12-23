@@ -8,22 +8,24 @@ endif()
 
 #!!! for correct build on Windows set BOOST_ROOT environment variable !!!
 
-set(Boost_NO_BOOST_CMAKE ON)
+#set(Boost_NO_BOOST_CMAKE ON)
 #set(Boost_NO_SYSTEM_PATHS TRUE)
 
 if (WIN32)  
-  set(Boost_ARCHITECTURE "-x32")
+#  set(Boost_ARCHITECTURE "-x32")
   
-  set(BOOST_USE_STATIC_LIBS ON)
-  set(BOOST_USE_MULTITHREADED ON)
-  set(BOOST_USE_STATIC_RUNTIME ON)
+#  set(BOOST_USE_STATIC_LIBS ON)
+#  set(BOOST_USE_MULTITHREADED ON)
+#  set(BOOST_USE_STATIC_RUNTIME ON)
 endif()
 
-find_package(Boost COMPONENTS system filesystem REQUIRED)
+#set(Boost_DEBUG ON)
+
+#find_package(Boost COMPONENTS system filesystem REQUIRED)
 find_package(Threads)
 
-LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+#LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+#INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
 #add_subdirectory("${PROJECT_SOURCE_DIR}/googletest" "googletest")
 
@@ -41,26 +43,26 @@ add_library(bulkmt_lib bulk_manager.h bulk_manager.cpp single_bulk.h single_bulk
 
 set_target_properties(bulkmt bulkmt_lib #test_bulkmt
     PROPERTIES
-    CXX_STANDARD 14
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
 
-set_target_properties(bulkmt_lib PROPERTIES
+#set_target_properties(bulkmt_lib PROPERTIES
     #COMPILE_DEFINITIONS #BOOST_FILESYSTEM_DYN_LINK
-    INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
-)
+    #INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
+#)
 
 target_include_directories(bulkmt_lib
-    PRIVATE "${CMAKE_BINARY_DIR}" ${Boost_INCLUDE_DIRS}
+    PRIVATE "${CMAKE_BINARY_DIR}" #${Boost_INCLUDE_DIRS}
 )
 
 target_link_libraries(bulkmt_lib PRIVATE 
-    ${Boost_LIBRARIES}
+    #${Boost_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT} 
 )
 
 target_link_libraries(bulkmt PRIVATE
-    ${Boost_LIBRARIES}
+    #${Boost_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT} 
     bulkmt_lib 
 )

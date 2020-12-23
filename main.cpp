@@ -120,8 +120,8 @@ int main(int argc, char** argv)
   TSingleBulk DynamicBulk(&BulkManager, eBulkTypeDynamic, &ListOfBulks, &Mtx, &CondVar);
 
   std::thread Log(PrintInConsole, std::ref(ListOfBulks), std::ref(LogCounter));
-  std::thread File1(PrintInConsole, std::ref(ListOfBulks), std::ref(File1Counter));
-  std::thread File2(PrintInConsole, std::ref(ListOfBulks), std::ref(File2Counter));
+  std::thread File1(PrintInFile, std::ref(ListOfBulks), std::ref(File1Counter));
+  std::thread File2(PrintInFile, std::ref(ListOfBulks), std::ref(File2Counter));
 
   std::string Cmd;
   while (std::getline(std::cin, Cmd))

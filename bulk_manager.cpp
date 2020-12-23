@@ -1,14 +1,16 @@
 //------------------------------------------------------------------------
 #include "bulk_manager.h"
 //------------------------------------------------------------------------
-#include <boost/filesystem.hpp>
+//#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <iostream>
 //------------------------------------------------------------------------
 
 TBulkManager::TBulkManager()
 {
-  boost::filesystem::path Path{L"./logs"};
-  boost::filesystem::create_directory(Path);
+  /*boost::filesystem::path Path{L"./logs"};
+  boost::filesystem::create_directory(Path);*/
+  std::filesystem::create_directory("./logs");
   SetBrackCountersToZero();
 }
 //------------------------------------------------------------------------
